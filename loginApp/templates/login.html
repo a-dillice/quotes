@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'scripts/jquery.js' %}"></script>
+    <script src="{% static 'scripts/ui.js' %}"></script>
+    <title>Login Page</title>
+</head>
+<body>
+
+    <!-- main wrapper -->
+    <div id="wrapper">
+
+        <!-- registration -->
+        <div class="sections jumbotron jumbotron-fluid">
+            <div class="container">
+              
+                <!-- header -->
+                <h1 class="display-4">Register</h1>
+                
+                <!-- registration form -->
+                <form action="{% url 'loginApp:register' %}" method="post">
+                    {% csrf_token %}
+                    <!-- first name -->
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="reg-fname">
+                    </div>
+
+                    <!-- last name -->
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="reg-lname">
+                    </div>
+
+                    <!-- age -->
+                    <div class="form-group">
+                        <label for="datetimepicker">Date of Birth</label>
+                        <div class='input-group date'>
+                            <span class="input-group-addon">
+                                <span class="calendar-icon"></span>
+                            </span>
+                            <input id='datetimepicker' type='text' class="form-control" name="reg-bday">
+                        </div>
+                        <script type="text/javascript">
+                            jQuery('#datetimepicker').datepicker({
+                                dateFormat:'MM dd, yy',
+                            });
+                        </script>                        
+                    </div>   
+
+                    <!-- email -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" name="reg-email">
+                    </div>
+
+                    <!-- password -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="reg-password">
+                    </div>
+
+                    <!-- password confirm -->
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm-password" name="reg-password-confirm">
+                    </div>
+                 
+                    <!-- submit -->
+                    <button type="submit" class="btn btn-primary">Register</button>
+                
+                </form>
+                <!-- registration errors  -->
+                {% if messages %} 
+                    <div class="registration-errors">
+                        {% for msg in messages %}
+                            {% if "registration" in msg.tags %}
+                                {% if msg.tags == 'success' %}
+                                    <small class="form-text text-success">{{msg}}</small>
+                                {% else %}
+                                    <small class="form-text text-danger">{{msg}}</small>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %} 
+                    </div>
+                {% endif %}
+            </div>
+          </div>
+
+        <!-- login -->
+        <div class="sections jumbotron jumbotron-fluid">
+            <div class="container">
+              
+                <!-- header -->
+                <h1 class="display-4">Login</h1>
+                
+                <!-- registration form -->
+                <form action="{% url 'loginApp:login' %}" method="post">
+                    {% csrf_token %}
+
+                    <!-- email -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com" name="log-email">
+                    </div>
+                    
+                    <!-- password -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="log-password">
+                    </div>             
+
+                    <!-- submit -->
+                    <button type="submit" class="btn btn-primary">Login</button>
+                
+                </form>
+                <!-- login errors  -->
+                {% if messages %} 
+                    <div class="login-errors">
+                        {% for msg in messages %}
+                            {% if "login" in msg.tags %}
+                                {% if msg.tags == 'success' %}
+                                    <small class="form-text text-success">{{msg}}</small>
+                                {% else %}
+                                    <small class="form-text text-danger">{{msg}}</small>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %} 
+                    </div>
+                {% endif %}                    
+            </div>
+          </div>
+
+
+    </div>
+</body>
+</html>

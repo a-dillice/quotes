@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/quotes.css' %}">
+    <title>Quotes Page</title>
+</head>
+<body>
+<body>
+    <!-- user info -->
+    <ul class="nav justify-content-end">
+        <li class="myname nav-item"><span>Welcome {{user.firstName}} {{user.lastName}}!</span></li>
+        <li class="nav-item"><a href="{% url 'quoteApp:quotes' %}" class='text-primary' title="all quotes">Quotes</a></span></li>
+        <li class="nav-item"><a href="{% url 'quoteApp:myQuotes' id=user.id %}" class='text-primary' title="my quotes">My Quotes</a></span></li>
+        <li class="nav-item"><a href="{% url 'loginApp:account' id=user.id %}" class='text-primary' title="my account">My Account</a></span></li>
+        <li class="nav-item">
+            <form action="{% url 'loginApp:logout' %}" method="get">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" title="log out">Log out</button>
+            </form>
+        </li>
+      </ul>
+
+      <!-- wrapper -->
+      <div id="wrapper">
+
+        <!-- quotes -->
+        <div class="sections">
+            <h2>Quotes</h2>
+            {% if allQuotes %}
+                {% for quote in allQuotes %}
+                    
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text"><span class='author-name'>{{quote.author}}:</span> "{{quote.quote}}"</p>
+                        <h5 class="card-title">Posted By <a class='text-primary' href="{% url 'quoteApp:myQuotes' id=quote.user.id %}">{{quote.user.firstName}} {{quote.user.lastName}}</a></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{quote.likes.all|length}} people likes this.</h6>
+                        
+                        <div class="btn-group" role="group">
+                            {% if user.id == quote.user.id %}
+                                <!-- delete  -->
+                                <form action="{% url 'quoteApp:deleteQuotes' id=quote.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="quote-del btn btn-outline-danger">Delete</button>
+                                </form>
+                            {% endif %}
+                            
+                            <!-- like  -->
+                            <form action="{% url 'quoteApp:likeQuotes' id=quote.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-info">Like</button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                {% endfor %}
+            {% else%}
+                <div class="alert alert-warning" role="alert">No quotes have been added yet.</div>
+            {% endif %}
+
+        </div>
+
+        <!-- add quote -->
+        <div class="sections">
+            <h2>Add a Quote</h2>
+            <form action="{% url 'quoteApp:addQuotes' %}" method="post">
+                {% csrf_token %}
+
+                <!-- first name -->
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" class="form-control" id="author" name="add-author">
+                </div>
+
+                <!-- last name -->
+                <div class="form-group">
+                    <label for="quote">Quote</label>
+                    <textarea class="form-control" id="quote" name="add-quote"></textarea>
+                </div>
+                
+                <!-- errors  -->
+                {% if messages %}
+                    <div class="account-errors">
+                        {% for msg in messages %}
+                            {% if msg.tags == 'success' %}
+                                <small class="form-text text-success">{{msg}}</small>
+                            {% else %}
+                                <small class="form-text text-danger">{{msg}}</small>
+                            {% endif %}
+                        {% endfor %} 
+                    </div>
+                {% endif %}
+
+                <!-- submit -->
+                <button type="submit" class="btn btn-primary" title="log out">Update</button>
+            
+            </form>
+
+        </div>
+
+
+      </div>
+
+
+</body>
+</html>

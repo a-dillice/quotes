@@ -1,0 +1,61 @@
+
+#wrapper{
+    padding:20px;
+    width:100%;
+    display:flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.sections{
+    width:45%;
+}
+
+.myname{
+    position:absolute;
+    left:0;
+}
+
+.nav li{
+    padding:10px;
+    line-height: 36px;
+    text-transform: capitalize;
+}
+
+.nav li span{
+    font-weight:bold;
+}
+
+.nav li *{
+    vertical-align:middle;
+}
+
+.account-errors{
+    margin-bottom:20px;
+}
+
+.quote-del{
+    margin-right:10px;
+}
+
+.btn-group{
+    margin-top:10px;
+}
+
+.author-name{
+    font-weight:bold;
+}
+
+.card{
+    margin-top:20px;
+}
+
+#my-quotes-wrapper{
+    width:100%;
+    height:100%;
+    padding:20px;
+}
+
+.my-quotes-header{
+    text-transform: capitalize;
+}
