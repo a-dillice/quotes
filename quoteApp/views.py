@@ -142,7 +142,7 @@ def userQuotes(req, id):
 
         # get all quotes
         allQuotes = Quotes.objects.filter(user=id)
-        print(allQuotes[0].user.firstName)
+        
         # data
         data = {
             "allQuotes":allQuotes,

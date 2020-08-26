@@ -5,6 +5,7 @@ import bcrypt
 
 # index 
 def index(req):
+
     # render login home/index page
     return render(req, "login.html")
 
